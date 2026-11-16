@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: chart-predictor-test
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: MODELS
+        value: openai/gpt-4o,google/gemini-flash-1.5
+      - key: HORIZON_MIN
+        value: "5"
+      - key: PAYOUT_PCT
+        value: "80"
+      - key: TZ_OFFSET
+        value: "3"
+      - key: DATA_DIR
+        value: /var/data
